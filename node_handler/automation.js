@@ -30,7 +30,7 @@ options.addArguments(
   '--ignore-certificate-errors',
   '--dns-prefetch-disable',
   '--enable-unsafe-swiftshader',
-//   '--headless', // Uncomment this line to run in headless mode
+  '--headless', // Uncomment this line to run in headless mode
 );
 
 options.addExtensions(openloop_Extension_Path);
