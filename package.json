@@ -1,0 +1,23 @@
+{
+  "name": "farm_extenode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chromedriver": "^131.0.5",
+    "console-stamp": "^3.1.2",
+    "dotenv": "^16.4.7",
+    "fs": "^0.0.1-security",
+    "node-imap": "^0.9.6",
+    "path": "^0.12.7",
+    "proxy-chain": "^2.5.6",
+    "request": "^2.88.2",
+    "selenium-webdriver": "^4.27.0"
+  }
+}
