@@ -30,7 +30,7 @@ options.addArguments(
   '--ignore-certificate-errors',
   '--dns-prefetch-disable',
   '--enable-unsafe-swiftshader',
-  '--headless', // Uncomment this line to run in headless mode
+//   '--headless', // Uncomment this line to run in headless mode
 );
 
 options.addExtensions(openloop_Extension_Path);
@@ -207,7 +207,7 @@ async function runAutomationForAccountAndProxy(account, proxyUrl, tasks = []) {
             if (tasks.includes('gradient')) {
                 await switchToTab(driver, 1);
                 await tokenPlugin.navigateToExtension(driver, gradient_extension_url);
-                await tokenPlugin.check_gradient(driver, username, proxyUrl, last2minValueGradient);
+                await tokenPlugin.check_gradient(driver, username, proxyUrl, isFirstLogin, last2minValueGradient);
             }
         } catch (err) {
             console.error(`Failed to check gradient for ${username} on proxy ${proxyUrl}: ${err.message}, try to relogin`);
@@ -225,7 +225,7 @@ async function runAutomationForAccountAndProxy(account, proxyUrl, tasks = []) {
 
         try {
             if (tasks.includes('toggle')) {
-                await switchToTab(driver, 3);
+                await switchToTab(driver, 2);
                 await tokenPlugin.navigateToExtension(driver, toggle_extension_url);
                 await tokenPlugin.check_toggle(driver, username, proxyUrl, last2minValueToggle);
             }
