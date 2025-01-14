@@ -9,7 +9,7 @@ const PROXY_CHUNK_SIZE = 10;
 // Function to create a worker and process a chunk of proxies
 async function processWithWorker(proxies) {
   return new Promise((resolve, reject) => {
-    const worker = new Worker('./node_handler/proxy_handler/worker.js');
+    const worker = new Worker('./proxy_handler/worker.js');
     
     worker.on('message', (results) => {
       resolve(results);

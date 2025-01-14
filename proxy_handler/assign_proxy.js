@@ -60,4 +60,9 @@ async function processAccountsAndProxies(accountFilePath, outputFilePath) {
   console.log(`Accounts with proxies have been saved to ${outputFilePath}`);
 }
 
+const accountFilePath = "./../config/accounts.txt";
+const outputFilePath = "./../config/account_with_proxy.json";
+
+// processAccountsAndProxies()
+
 module.exports = { processAccountsAndProxies };

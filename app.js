@@ -5,16 +5,29 @@ const { processAccountsAndProxies } = require('./proxy_handler/assign_proxy');
 const accountFilePath = "./config/accounts.txt";
 const outputFilePath = "./config/account_with_proxy.json";
 
-// account and proxy processing
-// processProxies()
-// processAccountsAndProxies(accountFilePath, outputFilePath)
 
-// Create an instance of the Farm class
-const exe = new Farm();
+async function main () {
+  // Proxy processing
+  await processProxies()
+  // Account processing
+  const assignedAccounts = await processAccountsAndProxies(accountFilePath, outputFilePath);
+  // Farm automation
+  const farm = new Farm();
+  await farm.run();
+}
 
-// Call the run method to start the automation
-exe.run().then(() => {
-  console.log("Farm automation completed.");
-}).catch(err => {
-  console.error("Error running farm automation:", err);
-});
+main()
+
+// // account and proxy processing
+// await processProxies()
+// await processAccountsAndProxies(accountFilePath, outputFilePath)
+
+// // Create an instance of the Farm class
+// const exe = new Farm();
+
+// // Call the run method to start the automation
+// exe.run().then(() => {
+//   console.log("Farm automation completed.");
+// }).catch(err => {
+//   console.error("Error running farm automation:", err);
+// });
