@@ -139,43 +139,109 @@ async function runAutomationForAccountAndProxy(account, proxyUrl, tasks = []) {
     // Initialize task execution
     if (tasks.includes('openloop')) {
         await switchToTab(driver, 0);
-        await tokenPlugin.login_openloop(driver, username, password, proxyUrl, isFirstLogin);
-    } 
+        try {
+          await tokenPlugin.login_openloop(driver, username, password, proxyUrl, isFirstLogin);
+        } catch (err) {
+          console.error(`Failed to login to openloop for ${username} on proxy ${proxyUrl}: ${err.message}`);
+          await driver.close(); 
+          tasks = tasks.filter(task => task !== 'openloop');
+          return;
+        }
+    }
+  
     if (tasks.includes('gradient')) {
         await switchToTab(driver, 1);
-        await tokenPlugin.login_gradient(driver, username, password, proxyUrl);
-    } 
+        try {
+            await tokenPlugin.login_gradient(driver, username, password, proxyUrl);
+        } catch (err) {
+            console.error(`Failed to login to gradient for ${username} on proxy ${proxyUrl}: ${err.message}`);
+            await driver.close();
+            tasks = tasks.filter(task => task !== 'gradient');
+            return;
+        }
+    }
+  
     if (tasks.includes('toggle')) {
         await switchToTab(driver, 2);
-        await tokenPlugin.login_toggle(driver, username, password, proxyUrl);
+        try {
+            await tokenPlugin.login_toggle(driver, username, password, proxyUrl);
+        } catch (err) {
+            console.error(`Failed to login to toggle for ${username} on proxy ${proxyUrl}: ${err.message}`);
+            await driver.close();
+            tasks = tasks.filter(task => task !== 'toggle');
+            return;
+        }
     }
+
+    var relogin_openloop = 0;
+    var relogin_gradient = 0;
+    var relogin_toggle = 0;
 
     // Token checking loop
     while (true) {
-      try {
-        if (tasks.includes('openloop')) {
-          await switchToTab(driver, 0);
-          await tokenPlugin.navigateToExtension(driver, openloop_extension_url);
-          await tokenPlugin.check_openloop(driver, username, password, proxyUrl);
+        // Check token status
+        try {
+            if (tasks.includes('openloop')) {
+                await switchToTab(driver, 0);
+                await tokenPlugin.navigateToExtension(driver, openloop_extension_url);
+                await tokenPlugin.check_openloop(driver, username, password, proxyUrl);
+            }
+        } catch (err) {
+            console.error(`Failed to check openloop for ${username} on proxy ${proxyUrl}: ${err.message}, try to relogin`);
+            if (relogin_openloop === 5) {
+                console.error(`Relogin limit reached for openloop for ${username} on proxy ${proxyUrl}`);
+                await driver.close();
+                tasks = tasks.filter(task => task !== 'openloop');
+                return;
+            } else {
+                relogin_openloop++;
+                await tokenPlugin.login_openloop(driver, username, password, proxyUrl, isFirstLogin=false);
+                await driver.sleep(5000);
+            }
         }
 
-        if (tasks.includes('gradient')) {
-          await switchToTab(driver, 1);
-          await tokenPlugin.navigateToExtension(driver, gradient_extension_url);
-          await tokenPlugin.check_gradient(driver, username, proxyUrl, isFirstLogin, last2minValueGradient);
+        try {
+            if (tasks.includes('gradient')) {
+                await switchToTab(driver, 0);
+                await tokenPlugin.navigateToExtension(driver, gradient_extension_url);
+                await tokenPlugin.check_gradient(driver, username, proxyUrl, last2minValueGradient);
+            }
+        } catch (err) {
+            console.error(`Failed to check gradient for ${username} on proxy ${proxyUrl}: ${err.message}, try to relogin`);
+            if (relogin_gradient === 5) {
+                console.error(`Relogin limit reached for gradient for ${username} on proxy ${proxyUrl}`);
+                await driver.close();
+                tasks = tasks.filter(task => task !== 'gradient');
+                return;
+            } else {
+                relogin_gradient++;
+                await tokenPlugin.login_gradient(driver, username, password, proxyUrl, isFirstLogin=false);
+                await driver.sleep(5000);
+            }
         }
 
-        if (tasks.includes('toggle')) {
-          await switchToTab(driver, 2);
-          await tokenPlugin.navigateToExtension(driver, toggle_extension_url);
-          await tokenPlugin.check_toggle(driver, username, proxyUrl, last2minValueToggle);
+        try {
+            if (tasks.includes('toggle')) {
+                await switchToTab(driver, 0);
+                await tokenPlugin.navigateToExtension(driver, toggle_extension_url);
+                await tokenPlugin.check_toggle(driver, username, proxyUrl, last2minValueToggle);
+            }
+        } catch (err) {
+            console.error(`Failed to check toggle for ${username} on proxy ${proxyUrl}: ${err.message}, try to relogin`);
+            if (relogin_toggle === 5) {
+                console.error(`Relogin limit reached for toggle for ${username} on proxy ${proxyUrl}`);
+                await driver.close();
+                tasks = tasks.filter(task => task !== 'toggle');
+                return;
+            } else {
+                relogin_toggle++;
+                await tokenPlugin.login_toggle(driver, username, password, proxyUrl);
+                await driver.sleep(5000);
+            }
         }
-
-        await driver.sleep(200000);  // Sleep for 20 seconds before checking again
+        
+        await driver.sleep(200000);
         isFirstLogin = false;
-      } catch (error) {
-        console.log(`Error while farming tokens for ${username} using proxy ${proxyUrl}: ${error.message}`);
-      }
     }
 
   } catch (error) {

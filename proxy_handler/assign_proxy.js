@@ -28,21 +28,27 @@ function getServiceNamesFromUrls(urls) {
     .filter(serviceName => serviceName);  // Filter out undefined services
 }
 
-// Assign proxies to accounts
+// Assign proxies to accounts without reusing the same proxy
 function assignProxiesToAccounts(accounts, proxies) {
+  const assignedProxies = new Set(); // Track which proxies have already been assigned
+
   return accounts.map(account => {
-    // Get up to 5 proxies for this account
-    const assignedProxies = proxies.slice(0, 5).map(proxy => {
-      // Extract the service names from the success URLs and add them to the proxy entry
+    // Filter out proxies that have already been assigned
+    const availableProxies = proxies.filter(proxy => !assignedProxies.has(proxy.proxy));
+
+    // Get up to 5 proxies for this account (if available)
+    const accountProxies = availableProxies.slice(0, 5).map(proxy => {
       const runServices = getServiceNamesFromUrls(proxy.success);
+      assignedProxies.add(proxy.proxy); // Mark this proxy as assigned
       return {
         ...proxy,
         run: runServices  // Add the "run" field with the service names
       };
     });
+
     return {
       username: account.username,
-      proxies: assignedProxies
+      proxies: accountProxies
     };
   });
 }

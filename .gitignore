@@ -1,4 +1,4 @@
 /node_modules
 package-lock.json
-config/accounts.txt
-config/proxy.txt
+./config/accounts.txt
+./config/proxy.txt
