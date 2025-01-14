@@ -20,6 +20,9 @@ const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 // Configure Chrome options to disable GPU, sandbox, and add the extension
 let options = new chrome.Options();
 options.addArguments(
+  'start-maximized',
+  'disable-infobars',
+  '--disable-application-cache',
   '--no-sandbox',
   '--disable-gpu',
   `--user-agent=${USER_AGENT}`,
@@ -202,7 +205,7 @@ async function runAutomationForAccountAndProxy(account, proxyUrl, tasks = []) {
 
         try {
             if (tasks.includes('gradient')) {
-                await switchToTab(driver, 0);
+                await switchToTab(driver, 1);
                 await tokenPlugin.navigateToExtension(driver, gradient_extension_url);
                 await tokenPlugin.check_gradient(driver, username, proxyUrl, last2minValueGradient);
             }
@@ -222,7 +225,7 @@ async function runAutomationForAccountAndProxy(account, proxyUrl, tasks = []) {
 
         try {
             if (tasks.includes('toggle')) {
-                await switchToTab(driver, 0);
+                await switchToTab(driver, 3);
                 await tokenPlugin.navigateToExtension(driver, toggle_extension_url);
                 await tokenPlugin.check_toggle(driver, username, proxyUrl, last2minValueToggle);
             }
