@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Import the proxy list from the filtered_proxy.js file
-const proxyList = require('./../config/filtered_proxy.json');
+const proxyList = require('../config/filtered_proxy.json');
 
 // Read accounts from a text file
 function readAccountsFromFile(filePath) {

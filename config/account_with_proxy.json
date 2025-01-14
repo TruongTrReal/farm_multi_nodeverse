@@ -1,14 +1,21 @@
 [
   {
     "username": "bull400@tourzy.us",
-    "proxies": []
-  },
-  {
-    "username": "bull401@tourzy.us",
-    "proxies": []
-  },
-  {
-    "username": "bull402@tourzy.us",
-    "proxies": []
+    "proxies": [
+      {
+        "proxy": "iudr2e0v:iUDR2e0v@180.214.237.212:20211\r",
+        "success": [
+          "https://app.gradient.network",
+          "https://toggle.pro/sign-in",
+          "https://openloop.so/auth/login"
+        ],
+        "fail": [],
+        "run": [
+          "gradient",
+          "toggle",
+          "openloop"
+        ]
+      }
+    ]
   }
 ]

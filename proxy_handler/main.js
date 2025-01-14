@@ -2,7 +2,7 @@ const fs = require("fs");
 const { Worker, isMainThread, parentPort } = require("worker_threads");
 
 const inputFile = "./config/proxy.txt";
-const outputFile = "./../config/filtered_proxy.json";
+const outputFile = "./config/filtered_proxy.json";
 
 const PROXY_CHUNK_SIZE = 10;
 

@@ -11,9 +11,15 @@ async function main () {
   await processProxies()
   // Account processing
   const assignedAccounts = await processAccountsAndProxies(accountFilePath, outputFilePath);
-  // Farm automation
-  const farm = new Farm();
-  await farm.run();
+  const exe = new Farm();
+
+  // Call the run method to start the automation
+  exe.run().then(() => {
+    console.log("Farm automation completed.");
+  }).catch(err => {
+    console.error("Error running farm automation:", err);
+  });
+
 }
 
 main()
@@ -23,11 +29,3 @@ main()
 // await processAccountsAndProxies(accountFilePath, outputFilePath)
 
 // // Create an instance of the Farm class
-// const exe = new Farm();
-
-// // Call the run method to start the automation
-// exe.run().then(() => {
-//   console.log("Farm automation completed.");
-// }).catch(err => {
-//   console.error("Error running farm automation:", err);
-// });
