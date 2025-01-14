@@ -11,6 +11,8 @@ async function main () {
   await processProxies()
   // Account processing
   const assignedAccounts = await processAccountsAndProxies(accountFilePath, outputFilePath);
+
+
   const exe = new Farm();
 
   // Call the run method to start the automation
@@ -23,9 +25,3 @@ async function main () {
 }
 
 main()
-
-// // account and proxy processing
-// await processProxies()
-// await processAccountsAndProxies(accountFilePath, outputFilePath)
-
-// // Create an instance of the Farm class

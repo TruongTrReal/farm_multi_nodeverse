@@ -10,6 +10,8 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// const chromiumPath = path.join(__dirname, '/usr/bin/chromium');
+
 // Path to the CRX file (replace with your actual file path)
 const openloop_Extension_Path = path.resolve('./crxs/openloop.crx');
 const gradient_Extension_Path = path.resolve('./crxs/gradient.crx');
@@ -36,6 +38,8 @@ options.addArguments(
 options.addExtensions(openloop_Extension_Path);
 options.addExtensions(gradient_Extension_Path);
 options.addExtensions(toggle_Extension_Path);
+
+// options.setChromeBinaryPath(chromiumPath);
 
 const gradient_extension_url = "chrome-extension://caacbgbklghmpodbdafajbgdnegacfmo/popup.html";
 const openloop_extension_url = "chrome-extension://effapmdildnpkiaeghlkicpfflpiambm/dist/popup/index.html";
@@ -144,6 +148,7 @@ async function runAutomationForAccountAndProxy(account, proxyUrl, tasks = []) {
         await switchToTab(driver, 0);
         try {
           await tokenPlugin.login_openloop(driver, username, password, proxyUrl, isFirstLogin);
+          await driver.close();
         } catch (err) {
           console.error(`Failed to login to openloop for ${username} on proxy ${proxyUrl}: ${err.message}`);
           await driver.close(); 
@@ -153,9 +158,10 @@ async function runAutomationForAccountAndProxy(account, proxyUrl, tasks = []) {
     }
   
     if (tasks.includes('gradient')) {
-        await switchToTab(driver, 1);
+        await switchToTab(driver, 0);
         try {
             await tokenPlugin.login_gradient(driver, username, password, proxyUrl);
+            await driver.close();
         } catch (err) {
             console.error(`Failed to login to gradient for ${username} on proxy ${proxyUrl}: ${err.message}`);
             await driver.close();
@@ -165,9 +171,10 @@ async function runAutomationForAccountAndProxy(account, proxyUrl, tasks = []) {
     }
   
     if (tasks.includes('toggle')) {
-        await switchToTab(driver, 2);
+        await switchToTab(driver, 0);
         try {
             await tokenPlugin.login_toggle(driver, username, password, proxyUrl);
+            await driver.close();
         } catch (err) {
             console.error(`Failed to login to toggle for ${username} on proxy ${proxyUrl}: ${err.message}`);
             await driver.close();
@@ -205,7 +212,7 @@ async function runAutomationForAccountAndProxy(account, proxyUrl, tasks = []) {
 
         try {
             if (tasks.includes('gradient')) {
-                await switchToTab(driver, 1);
+                await switchToTab(driver, 0);
                 await tokenPlugin.navigateToExtension(driver, gradient_extension_url);
                 await tokenPlugin.check_gradient(driver, username, proxyUrl, isFirstLogin, last2minValueGradient);
             }
@@ -225,7 +232,7 @@ async function runAutomationForAccountAndProxy(account, proxyUrl, tasks = []) {
 
         try {
             if (tasks.includes('toggle')) {
-                await switchToTab(driver, 2);
+                await switchToTab(driver, 0);
                 await tokenPlugin.navigateToExtension(driver, toggle_extension_url);
                 await tokenPlugin.check_toggle(driver, username, proxyUrl, last2minValueToggle);
             }
@@ -242,7 +249,9 @@ async function runAutomationForAccountAndProxy(account, proxyUrl, tasks = []) {
                 await driver.sleep(5000);
             }
         }
-        
+        await driver.executeScript(`window.open('', '_blank');`);
+        await switchToTab(driver, 0);
+        await driver.close();
         await driver.sleep(200000);
         isFirstLogin = false;
     }
