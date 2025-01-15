@@ -100,7 +100,7 @@ async function switchToTab(driver, index, url = 'about:blank') {
       // If it doesn't exist, create a new tab and navigate to the URL
       await driver.executeScript(`window.open('${url}', '_blank');`);
       const newWindowHandles = await driver.getAllWindowHandles();
-      await driver.switchTo().window(newWindowHandles[newWindowHandles.length - 1]);  // Switch to the new tab
+      await driver.switchTo().window(newWindowHandles[newWindowHandles.length - 1]);
       console.log(`Opened a new tab and switched to it.`);
   
       // Log the page title after switching to the new tab
