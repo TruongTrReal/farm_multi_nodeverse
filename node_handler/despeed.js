@@ -60,7 +60,7 @@ class DespeedService {
         getValueSafe(selectors.pointValue)
       ]);
 
-      this.logger.info(`OpenLoop status for ${username}:
+      this.logger.info(`Despeed status for ${username}:
       point: ${pointValue}`);
 
       let point = parseInt(pointValue, 10);
@@ -70,7 +70,7 @@ class DespeedService {
       return point;
 
     } catch (error) {
-      this.logger.error(`OpenLoop check failed for ${username}: ${error.message}`);
+      this.logger.error(`Despeed check failed for ${username}: ${error.message}`);
       return false;
     }
   }

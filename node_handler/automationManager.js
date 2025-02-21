@@ -611,7 +611,7 @@ class AutomationManager {
                 p.run = typeof p.run === 'string' ? JSON.parse(p.run) : p.run;
                 return p;
               })
-              .filter(p => p.run.length > 0)
+              .filter(p => Array.isArray(p.run) && p.run.length > 0)
           : []
       }));
     } catch (error) {
