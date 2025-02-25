@@ -1,8 +1,8 @@
 // node_handler/bmesh.js
-const config = require('./config');
-const { waitForElement, clickElement, safeClick, enterText } = require('./automationHelpers');
-const log4js = require('log4js');
-const { password } = require('@inquirer/prompts');
+import config from "./config.js";
+import { waitForElement, clickElement, safeClick, enterText } from "./automationHelpers.js";
+import log4js from "log4js";
+
 
 class BlockmeshService {
   constructor() {
@@ -74,4 +74,5 @@ class BlockmeshService {
   }
 }
 
-module.exports = new BlockmeshService();
+export default new BlockmeshService();
+

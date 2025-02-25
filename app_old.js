@@ -1,32 +1,11 @@
-const AutomationManager = require('./node_handler/automationManager');
-const { processProxies } = require('./proxy_handler/main');
-const { processAccountsAndProxies } = require('./proxy_handler/assign_proxy');
-const { resetDB } = require('./db_utils');
-const fs = require('fs');
-const path = require('path');
-
-// Use yargs to parse command-line arguments
-const yargs = require('yargs/yargs');
-const { hideBin } = require('yargs/helpers');
-const argv = yargs(hideBin(process.argv))
-  .option('reset', {
-    alias: 'r',
-    type: 'boolean',
-    description: 'Reset DB and delete profiles folder'
-  })
-  .option('proxy', {
-    alias: 'p',
-    type: 'boolean',
-    description: 'Process proxies and assign them to accounts'
-  })
-  .option('services', {
-    alias: 's',
-    type: 'array',
-    description: 'List of services to run',
-    choices: ['gradient', 'toggle', 'bless', 'openloop', 'blockmesh', 'despeed', 'depined']
-  })
-  .help()
-  .argv;
+import AutomationManager from "./node_handler/automationManager.js";
+import { processProxies } from "./proxy_handler/main.js";
+import { processAccountsAndProxies } from "./proxy_handler/assign_proxy.js";
+import { resetDB } from "./db_utils.js";
+import fs from "fs";
+import path from "path";
+import readline from "readline";
+import prompts from "prompts";
 
 // Ensure required directories exist
 const directories = ['./output', './profiles', './db', './config'];
@@ -37,14 +16,28 @@ directories.forEach(dir => {
   }
 });
 
+// Helper function to ask a question and return a Promise for the answer
+function askQuestion(query) {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  return new Promise(resolve => rl.question(query, answer => {
+    rl.close();
+    resolve(answer.trim().toLowerCase());
+  }));
+}
+
 async function main() {
   try {
-    if (argv.reset) {
+    // Ask if user wants to reset the DB
+    const resetAnswer = await askQuestion('Có muốn xóa data cũ kh (profile, cache db) (y/n): ');
+    if (resetAnswer === 'y' || resetAnswer === 'yes') {
       console.log('Resetting the database...');
       await resetDB();
 
       // Delete the profiles folder and its contents
-      const profilesDir = path.join(__dirname, 'profiles');
+      const profilesDir = path.join('profiles');
       if (fs.existsSync(profilesDir)) {
         await fs.promises.rm(profilesDir, { recursive: true, force: true });
         console.log(`Deleted profiles folder: ${profilesDir}`);
@@ -55,19 +48,36 @@ async function main() {
       console.log('Skipping database reset.');
     }
 
-    if (argv.proxy) {
+    // Ask if user wants to process proxies and assign them to accounts
+    const proxyAnswer = await askQuestion('Có check và gán proxy lại cho các account kh? (y/n): ');
+    if (proxyAnswer === 'y' || proxyAnswer === 'yes') {
       console.log('Processing proxies from ./config/proxy.txt ...');
       await processProxies("./config/proxy.txt");
 
-      const servicesChosen = argv.services;
-      if (!servicesChosen || servicesChosen.length === 0) {
-        console.error('No services provided. Please specify services using the --services option.');
-        process.exit(1);
-      }
-      console.log('Selected services:', servicesChosen);
+      // Use prompts' multiselect to allow selection of multiple services
+      const response = await prompts({
+        type: 'multiselect',
+        name: 'services',
+        message: 'Select the services to run:',
+        choices: [
+          { title: 'gradient', value: 'gradient' },
+          { title: 'toggle', value: 'toggle' },
+          { title: 'bless', value: 'bless' },
+          { title: 'openloop', value: 'openloop' },
+          { title: 'blockmesh', value: 'blockmesh' },
+          { title: 'despeed', value: 'despeed' },
+          { title: 'depined', value: 'depined' }
+        ],
+        hint: '- Space to select. Return to submit',
+        instructions: false,
+        min: 1
+      });
+
+      const service_chosen = response.services;
+      console.log('Selected services:', service_chosen);
 
       console.log('Processing accounts and proxies from ./config/accounts.txt ...');
-      await processAccountsAndProxies("./config/accounts.txt", './output', servicesChosen);
+      await processAccountsAndProxies("./config/accounts.txt", './output', service_chosen);
     } else {
       console.log('Skipping proxy and account processing.');
     }

@@ -1,7 +1,10 @@
 // db_utils.js
+import { initDB } from "./init_db.js";
+import log4js from "log4js";
 
-const { initDB } = require('./init_db');
-const log4js = require('log4js');
+
+
+
 
 const logger = log4js.getLogger();
 
@@ -35,4 +38,4 @@ async function resetDB() {
   }
 }
 
-module.exports = { resetDB };
+export { resetDB };

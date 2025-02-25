@@ -1,8 +1,8 @@
 // openloop.js
-const { By, until } = require('selenium-webdriver');
-const config = require('./config');
-const { waitForElement, clickElement, safeClick } = require('./automationHelpers');
-const log4js = require('log4js');
+import { By, until } from "selenium-webdriver";
+import config from "./config.js";
+import { waitForElement, clickElement, safeClick } from "./automationHelpers.js";
+import log4js from "log4js";
 
 class OpenloopService {
   constructor() {
@@ -89,4 +89,6 @@ class OpenloopService {
   }
 }
 
-module.exports = new OpenloopService();
+
+
+export default new OpenloopService();

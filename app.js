@@ -1,10 +1,11 @@
 // app_test.js
-const fs = require('fs');
-const path = require('path');
-const { processProxies } = require('./src/proxy/main');
-const { processAccountsAndProxies } = require('./src/proxy/assign_proxy');
-const { resetDB } = require('./src/db');
-const TaskAutomationManager = require('./src/automationTasksManager');
+import fs from "fs";
+import path from "path";
+import { processProxies } from "./src/proxy/main.js";
+import { processAccountsAndProxies } from "./src/proxy/assign_proxy.js";
+import { resetDB } from "./src/db.js";
+import TaskAutomationManager from "./src/automationTasksManager.js";
+
 
 
 // Use yargs to parse command-line arguments

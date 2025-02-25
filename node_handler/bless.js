@@ -1,16 +1,18 @@
 // node_handler/bless.js
-const { By, Key, until } = require('selenium-webdriver');
-const axios = require('axios');
-const { 
+import { By, Key, until } from "selenium-webdriver";
+import axios from "axios";
+import { 
     waitForElement,
     checkElementExsist,
     clickElement, 
     safeClick, 
     enterText, 
     tabReset 
-} = require('./automationHelpers');
-const config = require('./config');
-const log4js = require('log4js');
+} from "./automationHelpers.js";
+import config from "./config.js";
+import log4js from "log4js";
+
+
 
 
 // Utility function to pause execution for a specified amount of time.
@@ -337,4 +339,4 @@ class BlessService {
   
 }
 
-module.exports = new BlessService();
+export default new BlessService();

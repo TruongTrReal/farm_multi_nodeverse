@@ -1,14 +1,16 @@
 // node_handler/tokenHandler.js
-const log4js = require('log4js');
-const config = require('./config');
-const { waitForElement } = require('./automationHelpers');
-const openloopService = require('./openloop');
-const gradientService = require('./gradient');
-const toggleService = require('./toggle');
-const blessService = require('./bless');
-const blockmeshService = require('./bmesh');
-const despeedService = require('./despeed');
-const depinedService = require('./depined');
+import log4js from "log4js";
+import config from "./config.js";
+import { waitForElement } from "./automationHelpers.js";
+import openloopService from "./openloop.js";
+import gradientService from "./gradient.js";
+import toggleService from "./toggle.js";
+import blessService from "./bless.js";
+import blockmeshService from "./bmesh.js";
+import despeedService from "./despeed.js";
+import depinedService from "./depined.js";
+
+
 
 class TokenPlugin {
   constructor() {
@@ -76,4 +78,4 @@ class TokenPlugin {
   }
 }
 
-module.exports = TokenPlugin;
+export default TokenPlugin;

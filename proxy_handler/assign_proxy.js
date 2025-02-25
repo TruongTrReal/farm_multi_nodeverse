@@ -1,8 +1,8 @@
 // proxy_handler/assign_proxy.js
-const fs = require('fs');
-const path = require('path');
-const log4js = require('log4js');
-const { initDB } = require('../init_db.js');
+import fs from "fs";
+import path from "path";
+import log4js from "log4js";
+import { initDB } from "../init_db.js";
 
 // Configure log4js
 log4js.configure({
@@ -124,4 +124,10 @@ async function processAccountsAndProxies(accountFilePath, outputDir = './output'
   }
 }
 
-module.exports = { processAccountsAndProxies };
+export { processAccountsAndProxies };
+
+
+
+
+
+

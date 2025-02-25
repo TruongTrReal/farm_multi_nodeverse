@@ -1,12 +1,12 @@
 // node_handler/automationManager.js
-const fs = require('fs');
-const path = require('path');
-const os = require('os');
-const { Builder } = require('selenium-webdriver');
-const proxyChain = require('proxy-chain');
-const TokenPlugin = require('./tokenHandler');
-const { initDB } = require('../init_db');
-const {
+import fs from "fs";
+import path from "path";
+import os from "os";
+import { Builder } from "selenium-webdriver";
+import proxyChain from "proxy-chain";
+import TokenPlugin from "./tokenHandler.js";
+import { initDB } from "../init_db.js";
+import {
   MAX_LOGIN_RETRIES,
   PROFILE_CLEANUP_ON_FAILURE,
   CHECK_INTERVAL,
@@ -15,9 +15,11 @@ const {
   configureChromeOptions,
   FAILED_TASKS_PATH,
   logger
-} = require('./config');
-const { tabReset } = require('./automationHelpers');
-const fetch = require('node-fetch'); 
+} from "./config.js";
+import { tabReset } from "./automationHelpers.js";
+import fetch from "node-fetch";
+
+
 
 
 
@@ -621,4 +623,4 @@ class AutomationManager {
   }
 }
 
-module.exports = AutomationManager;
+export default AutomationManager;

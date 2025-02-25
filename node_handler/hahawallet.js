@@ -1,5 +1,5 @@
-const { WebDriver, By, WebElement } = require("selenium-webdriver");
-const {
+import { WebDriver, By, WebElement } from "selenium-webdriver";
+import {
   clickElement,
   enterText,
   actionsClickElement,
@@ -7,10 +7,11 @@ const {
   safeClick,
   checkElementExsist,
   tabReset,
-} = require("./automationHelpers");
+} from "./automationHelpers.js";
 
-const config = require("./config");
-const log4js = require("log4js");
+import config from "./config.js";
+import log4js from "log4js";
+
 /**
  * @typedef {Object} EmailThread
  * @property {number[]} draft_ids - Array of draft message IDs.
@@ -336,7 +337,9 @@ class HahaWallet {
   }
 }
 
-module.exports = new HahaWallet();
+
+
+export default new HahaWallet();
 
 // if (require.main === module) {
 //   const { Builder } = require("selenium-webdriver");

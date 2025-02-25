@@ -1,10 +1,12 @@
 // init_db.js
-const sqlite3 = require('sqlite3');
-const { open } = require('sqlite');
-const path = require('path');
+import sqlite3 from "sqlite3";
+import { open } from "sqlite";
+import path from "path";
+
+
 
 // You can change 'accounts.db' to any DB filename you prefer
-const DB_PATH = path.resolve(__dirname, './db/cache.db');
+const DB_PATH = path.resolve('./db/cache.db');
 
 async function initDB() {
   // Open (or create) the database
@@ -55,17 +57,6 @@ async function initDB() {
   return db;
 }
 
-// If you run this file directly (e.g. `node init_db.js`),
-// it will initialize the DB and then exit.
-if (require.main === module) {
-  initDB().then(() => {
-    console.log('DB init complete!');
-    process.exit(0);
-  }).catch(err => {
-    console.error('DB init error:', err);
-    process.exit(1);
-  });
-}
 
 // Export the initDB function so other files (like app.js) can use it
-module.exports = { initDB };
+export { initDB };

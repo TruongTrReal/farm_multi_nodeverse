@@ -1,20 +1,20 @@
-const fs = require('fs');
-const path = require('path');
-const os = require('os');
-const chrome = require('selenium-webdriver/chrome');
-const log4js = require('log4js');
-const { By } = require('selenium-webdriver');
+import fs from "fs";
+import path from "path";
+import os from "os";
+import chrome from "selenium-webdriver/chrome.js";
+import log4js from "log4js";
+import { By } from "selenium-webdriver";
 
 
 // Ensure the output/log directory exists
-const logDir = path.resolve(__dirname, './output', 'log');
+// const logDir = path.resolve(__dirname, './output', 'log');
 
-if (!fs.existsSync(logDir)) {
-  fs.mkdirSync(logDir, { recursive: true });
-}
+// if (!fs.existsSync(logDir)) {
+//   fs.mkdirSync(logDir, { recursive: true });
+// }
 
 // ─── SERVICES CONFIGURATION ──────────────────────────────────────────────
-const services = {
+export const services = {
   openloop: {
     loginUrl: "chrome-extension://effapmdildnpkiaeghlkicpfflpiambm/dist/popup/index.html",
     extensionUrl: "chrome-extension://effapmdildnpkiaeghlkicpfflpiambm/dist/popup/index.html",
@@ -182,7 +182,7 @@ const services = {
 };
 
 // ─── TIMEOUTS CONFIGURATION ───────────────────────────────────────────────
-const timeouts = {
+export const timeouts = {
   element: 60000,
   page: 60000,
   action: 10000,
@@ -190,15 +190,15 @@ const timeouts = {
 };
 
 // ─── AUTOMATION CONSTANTS ─────────────────────────────────────────────────
-const MAX_LOGIN_RETRIES = 2;
-const PROFILE_CLEANUP_ON_FAILURE = true;
-const CHECK_INTERVAL = 360000;
-const STAGGER_DELAY = 45000;
-const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36";
-const FAILED_TASKS_PATH = path.resolve('./output/fail_tasks.json');
+export const MAX_LOGIN_RETRIES = 2;
+export const PROFILE_CLEANUP_ON_FAILURE = true;
+export const CHECK_INTERVAL = 360000;
+export const STAGGER_DELAY = 45000;
+export const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36";
+export const FAILED_TASKS_PATH = path.resolve('./output/fail_tasks.json');
 
 // ─── EXTENSIONS CONFIGURATION ─────────────────────────────────────────────
-const EXTENSIONS = {
+export const EXTENSIONS = {
   openloop: { path: path.resolve('./crxs/openloop.crx') },
   gradient: { path: path.resolve('./crxs/gradient.crx') },
   toggle: { path: path.resolve('./crxs/toggle.crx') },
@@ -211,7 +211,7 @@ const EXTENSIONS = {
 };
 
 // ─── CHROME OPTIONS SETUP ───────────────────────────────────────────────
-const configureChromeOptions = () => {
+export const configureChromeOptions = () => {
   const options = new chrome.Options();
   const args = [
     `--user-agent=${USER_AGENT}`,
@@ -258,9 +258,9 @@ log4js.configure({
   });
   
 
-const logger = log4js.getLogger();
+export const logger = log4js.getLogger();
 
-module.exports = {
+export default {
   services,
   timeouts,
   MAX_LOGIN_RETRIES,

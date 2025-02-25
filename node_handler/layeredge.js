@@ -1,14 +1,16 @@
-const log4js = require("log4js");
-const { By, WebDriver, WebElement } = require("selenium-webdriver");
+import log4js from "log4js";
+import { By, WebDriver, WebElement } from "selenium-webdriver";
 
-const MtmService = require("./mtm");
-const {
+import MtmService from "./mtm.js";
+import {
   waitForElement,
   clickElement,
   enterText,
   checkElementExsist,
   actionsClickElement,
-} = require("./automationHelpers");
+} from "./automationHelpers.js";
+
+
 
 class LayerEdgeService {
   constructor() {
@@ -106,4 +108,4 @@ class LayerEdgeService {
   }
 }
 
-module.exports = new LayerEdgeService();
+export default new LayerEdgeService();

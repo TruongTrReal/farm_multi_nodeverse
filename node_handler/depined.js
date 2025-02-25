@@ -1,8 +1,9 @@
 // depined.js
-const { By, until } = require('selenium-webdriver');
-const config = require('./config');
-const { waitForElement, clickElement, enterText } = require('./automationHelpers');
-const log4js = require('log4js');
+import { By, until } from "selenium-webdriver";
+import config from "./config.js";
+import { waitForElement, clickElement, enterText } from "./automationHelpers.js";
+import log4js from "log4js";
+
 
 class DepinedService {
   constructor() {
@@ -70,4 +71,5 @@ class DepinedService {
   }
 }
 
-module.exports = new DepinedService();
+export default new DepinedService();
+

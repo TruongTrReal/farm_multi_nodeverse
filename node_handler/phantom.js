@@ -1,7 +1,8 @@
 // node_handler/phantom.js
-const { By } = require('selenium-webdriver');
-const { clickElement, enterText, waitForElement } = require('./automationHelpers');
-const log4js = require('log4js');
+import { By } from "selenium-webdriver";
+import { clickElement, enterText, waitForElement } from "./automationHelpers.js";
+import log4js from "log4js";
+
 
 class PhantomService {
   constructor() {
@@ -75,4 +76,5 @@ class PhantomService {
   }
 }
 
-module.exports = new PhantomService();
+
+export default new PhantomService();

@@ -1,10 +1,7 @@
 // automationHelpers.js
-const { By, until } = require('selenium-webdriver');
-const config = require('./config');
-const fs = require('fs');
-const {
-  logger
-} = require('./config');
+import { By, until } from "selenium-webdriver";
+import config from "./config.js";
+import fs from "fs";
 
 
 async function waitForElement(driver, selector, timeout = config.timeouts.element) {
@@ -217,7 +214,7 @@ async function waitForNewWindow(driver, currentHandles, timeout = 10000) {
 }
 
 
-module.exports = {
+export {
   waitForElement,
   checkElementExsist,
   clickElement,

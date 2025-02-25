@@ -1,6 +1,7 @@
-const { By, until } = require('selenium-webdriver');
-const config = require('./config');
-const fs = require('fs');
+// automationHelpers2.js
+import { By, until } from "selenium-webdriver";
+import config from "./config.js";
+import fs from "fs";
 
 class AutomationHelpers {
   constructor(driver) {
@@ -160,4 +161,4 @@ class AutomationHelpers {
   }
 }
 
-module.exports = AutomationHelpers;
+export { AutomationHelpers };

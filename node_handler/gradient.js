@@ -1,8 +1,8 @@
 // node_handler/gradient.js
-const { By, until } = require('selenium-webdriver');
-const config = require('./config');
-const { waitForElement, clickElement, safeClick, enterText } = require('./automationHelpers');
-const log4js = require('log4js');
+import { By, until } from "selenium-webdriver";
+import config from "./config.js";
+import { waitForElement, clickElement, safeClick, enterText } from "./automationHelpers.js";
+import log4js from "log4js";
 
 class GradientService {
   constructor() {
@@ -28,9 +28,9 @@ class GradientService {
       await enterText(driver, selectors.usernameInput, username);
       await enterText(driver, selectors.passwordInput, password);
       await clickElement(driver, selectors.loginButton);
-      await driver.sleep(3000);
+      await waitForElement(driver, selectors.dashboardElement, 30000);
       await driver.get(extensionUrl);
-      await waitForElement(driver, selectors.loginConfirmElement, 20000);
+      await waitForElement(driver, selectors.loginConfirmElement, 30000);
 
       this.logger.info(`Login success for Gradient ${username}`);
       return true;
@@ -92,4 +92,6 @@ class GradientService {
   }
 }
 
-module.exports = new GradientService();
+
+
+export default new GradientService();

@@ -1,19 +1,19 @@
 // node_handler/mtm.js
-const { By, until, WebDriver,Key } = require("selenium-webdriver");
-const config = require("./config");
-const {
+import { By, until, WebDriver, Key } from "selenium-webdriver";
+import config from "./config.js";
+import {
   tabReset,
   clickElement,
   enterText,
   scrollToElement,
   waitForElement,
   safeClick,
-} = require("./automationHelpers");
-const log4js = require("log4js");
-const fs = require("fs");
-const path = require("path");
-const { parseHeader } = require("node-imap");
-const { url } = require("inspector");
+} from "./automationHelpers.js";
+import log4js from "log4js";
+import fs from "fs";
+import path from "path";
+import { parseHeader } from "node-imap";
+import { url } from "inspector";
 
 async function copyRecoveryPhrase(driver) {
   try {
@@ -296,4 +296,6 @@ class MtmService {
   }
 }
 
-module.exports = new MtmService();
+
+
+export default new MtmService();

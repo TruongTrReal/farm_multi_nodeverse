@@ -1,8 +1,9 @@
 // node_handler/testVoltix.js
-const { Builder } = require('selenium-webdriver');
-const chrome = require('selenium-webdriver/chrome');
-const voltixService = require('./voltix');
-const { tabReset } = require('./automationHelpers');
+import { Builder } from "selenium-webdriver";
+import chrome from "selenium-webdriver/chrome";
+import voltixService from "./voltix.js";
+import { tabReset } from "./automationHelpers.js";
+
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));

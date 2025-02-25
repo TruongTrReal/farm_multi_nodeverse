@@ -1,10 +1,10 @@
 // proxy_handler/main.js
-const fs = require("fs");
-const { Worker } = require("worker_threads");
-const log4js = require("log4js");
+import fs from "fs";
+import { Worker } from "worker_threads";
+import log4js from "log4js";
 
 // 1) Bring in the DB initializer
-const { initDB } = require("../init_db.js");
+import { initDB } from "../init_db.js";
 
 // Configure log4js
 log4js.configure({
@@ -113,4 +113,6 @@ async function processProxies(inputFile) {
   }
 }
 
-module.exports = { processProxies };
+export { processProxies };
+
+

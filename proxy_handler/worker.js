@@ -1,7 +1,7 @@
 // proxy_handler/worker.js
-const { parentPort } = require("worker_threads");
-const request = require("request");
-const log4js = require("log4js");
+import { parentPort } from "worker_threads";
+import request from "request";
+import log4js from "log4js";
 
 // Configure log4js
 log4js.configure({
