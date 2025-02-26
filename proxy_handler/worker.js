@@ -64,7 +64,7 @@ async function testProxy(proxyUrl, domains) {
   };
 
   for (let domain of domains) {
-    if (domain === "https://bless.network" || domain === "https://app.blockmesh.xyz/" || domain === "https://app.depined.org/onboarding") {
+    if (domain === "https://bless.network" || domain === "https://app.blockmesh.xyz/" || domain === "https://app.depined.org/onboarding" || domain === "https://app.despeed.net/") {
       // Skip testing bless.network and add it directly to success
       results.success.push(services[domain]);
       logger.info(`Skipping ${domain}, automatically adding to success.`);
