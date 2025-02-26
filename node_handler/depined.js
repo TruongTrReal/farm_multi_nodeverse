@@ -1,5 +1,4 @@
 // depined.js
-import { By, until } from "selenium-webdriver";
 import config from "./config.js";
 import { waitForElement, clickElement, enterText } from "./automationHelpers.js";
 import log4js from "log4js";
@@ -37,9 +36,13 @@ class DepinedService {
       const { selectors } = config.services.depined;
 
       await driver.sleep(10000);
-      await waitForElement(driver, selectors.connectButton);
-      await clickElement(driver, selectors.connectButton);
-      await driver.sleep(5000);
+      await waitForElement(driver, selectors.connectButton); 
+
+      // check if text of the button is "Connected", if not click it
+      const buttonText = await getValueSafe(selectors.connectButtonText);
+      if (buttonText !== "Connected") {
+        await clickElement(driver, selectors.connectButton);
+      }
       
       // Helper to safely get element text.
       const getValueSafe = async (selector) => {
