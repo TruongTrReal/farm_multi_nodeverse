@@ -238,7 +238,11 @@ export const configureChromeOptions = () => {
   ];
 
   if (os.platform() === 'linux') {
-    args.push('--headless', '--no-sandbox', '--disable-gpu');
+    args.push(
+      // '--headless', 
+      '--no-sandbox', 
+      '--disable-gpu'
+    );
     options.setChromeBinaryPath('/usr/bin/chromium-browser');
   }
 

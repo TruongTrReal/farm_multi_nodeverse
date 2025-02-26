@@ -8,6 +8,7 @@
     "enquirer": "^2.4.1",
     "ethers": "^6.13.5",
     "fs": "^0.0.1-security",
+    "get-screen-resolution": "^1.0.4",
     "log4js": "^6.9.1",
     "node-fetch": "^3.3.2",
     "node-imap": "^0.9.6",
