@@ -36,7 +36,8 @@ class DepinedService {
       await driver.get(config.services.depined.extensionUrl);
       const { selectors } = config.services.depined;
 
-      await driver.sleep(2000);
+      await driver.sleep(10000);
+      await waitForElement(driver, selectors.connectButton);
       await clickElement(driver, selectors.connectButton);
       await driver.sleep(5000);
       

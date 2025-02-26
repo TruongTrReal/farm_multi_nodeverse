@@ -241,7 +241,7 @@ export const configureChromeOptions = () => {
     args.push(
       '--headless', 
       '--no-sandbox', 
-      '--disable-gpu'
+      '--disable-gpu' 
     );
     options.setChromeBinaryPath('/usr/bin/chromium-browser');
   }
