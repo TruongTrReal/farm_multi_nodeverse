@@ -490,6 +490,7 @@ class AutomationManager {
     }
   }
   
+  
   async safeServiceCheck(serviceCheckFunc, retries = 3) {
     let attempts = 0;
     while (attempts < retries) {
