@@ -18,20 +18,10 @@ import {
 } from "./config.js";
 import { tabReset } from "./automationHelpers.js";
 import fetch from "node-fetch";
-import { getResolution } from 'get-screen-resolution';
 
-let driverCount = 0;
 
-async function getScreenSize() {
-  try {
-    const { width, height } = await getResolution();
-    return { width, height };
-  } catch (error) {
-    console.error('Error retrieving screen resolution:', error);
-    // Fallback to default resolution
-    return { width: 1920, height: 1080 };
-  }
-}
+
+
 
 // Ensure output and profiles directories exist
 ['./output', './profiles'].forEach(dir => {
@@ -418,23 +408,23 @@ class AutomationManager {
         const options = configureChromeOptions();
         const parsedProxy = await this.processProxy(proxyUrl);
   
-        // Add user profile and proxy settings
         options.addArguments(`--user-data-dir=${profilePath}`);
         options.addArguments(`--proxy-server=${parsedProxy.url}`);
+
+        options.addExtensions(EXTENSIONS.hcapchaSolver.path);
+        logger.info(`Loaded extension: hcapchaSolver`);
+  
         if (parsedProxy.auth) {
           options.addArguments(`--proxy-auth=${parsedProxy.auth}`);
         }
   
-        // Load primary extension
-        options.addExtensions(EXTENSIONS.hcapchaSolver.path);
-        logger.info(`Loaded extension: hcapchaSolver`);
-  
-        // Validate additional extensions
         await this.validateExtensions();
+  
         const services = proxyRecord && proxyRecord.services ? JSON.parse(proxyRecord.services) : [];
         services.forEach(service => {
           const extConfig = EXTENSIONS[service];
           if (extConfig && extConfig.valid) {
+            
             try {
               options.addExtensions(extConfig.path);
               logger.info(`Loaded extension: ${service}`);
@@ -444,32 +434,11 @@ class AutomationManager {
           }
         });
   
-        // === GRID-BASED WINDOW PLACEMENT LOGIC ===
-        const { width: screenWidth, height: screenHeight } = await getScreenSize();
-        const cols = 5; // Number of columns in the grid
-        const rows = 4; // Number of rows in the grid
-        const maxBrowsers = cols * rows; // Maximum unique positions before wrapping
-        const padding = 1; // Padding in pixels
-  
-        // Compute the current position based on the global driverCount
-        const pos = driverCount % maxBrowsers;
-        const x = (pos % cols) * (screenWidth + padding) + padding;
-        const y = Math.floor(pos / cols) * (screenHeight + padding) + padding;
-        driverCount++;
-  
-        // Apply window placement and size
-        options.addArguments(`--window-position=${x},${y}`);
-        options.addArguments(`--window-size=${screenWidth},${screenHeight}`);
-        options.addArguments('--force-device-scale-factor=0.2');
-        // === END GRID LOGIC ===
-  
-        // Build and initialize the driver
         const driver = await new Builder()
           .forBrowser('chrome')
           .setChromeOptions(options)
           .build();
   
-        // Optional post-build steps (like resetting tabs)
         await driver.sleep(5000);
         await tabReset(driver);
   
