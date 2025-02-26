@@ -32,18 +32,6 @@ class DepinedService {
 
   async check(driver, username, proxyUrl) {
     try {
-      await driver.get(config.services.depined.extensionUrl);
-      const { selectors } = config.services.depined;
-
-      await driver.sleep(10000);
-      await waitForElement(driver, selectors.connectButton); 
-
-      // check if text of the button is "Connected", if not click it
-      const buttonText = await getValueSafe(selectors.connectButtonText);
-      if (buttonText !== "Connected") {
-        await clickElement(driver, selectors.connectButton);
-      }
-      
       // Helper to safely get element text.
       const getValueSafe = async (selector) => {
         try {
@@ -55,6 +43,27 @@ class DepinedService {
         }
       };
 
+      await driver.get(config.services.depined.extensionUrl);
+      const { selectors } = config.services.depined;
+
+      await driver.sleep(10000);
+      await waitForElement(driver, selectors.connectButton); 
+      await waitForElement(driver, selectors.connectButtonText);
+      await driver.sleep(5000);
+
+      // check if text of the button is "Connected", if not click it
+      const buttonText = await getValueSafe(selectors.connectButtonText);
+
+      // if (buttonText !== " Connected") {
+      //   await clickElement(driver, selectors.connectButton);
+      // }
+      // check if text starts with "C", if not click it
+      console.log('buttonText.includes("now") :>> ', buttonText.includes("now"));
+      if (buttonText.includes("now")) {
+        await clickElement(driver, selectors.connectButton);
+        await driver.sleep(5000);
+      }
+      
       const [pointV] = await Promise.all([
         getValueSafe(selectors.pointValue)
       ]);

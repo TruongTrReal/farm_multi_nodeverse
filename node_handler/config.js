@@ -110,7 +110,7 @@ export const services = {
       passwordInput: By.xpath('//*[@id="password"]'),
       loginButton: By.xpath('//*[@id="modal"]/div/div[2]/div/div[3]/div[1]/div[1]/div/div[2]/div/div[3]/div[4]/div/div'),
       connectButton: By.xpath('//*[@id="connect-button"]'),
-      connectButtonText: By.css('#connect-button > span'),
+      connectButtonText: By.xpath('//*[@id="connect-button"]/span'),
       loginConfirmElement: By.xpath('//*[@id="connect-button"]/span[normalize-space(text()) = "Connected"]'),
       loginConfirmDashboard: By.xpath('//*[@id="root"]/div[3]/div[3]/div[1]/div[4]/div[1]/div[1]'),
       pointValue: By.xpath('//*[@id="container"]/div[3]/div[1]/div[2]/span'),
