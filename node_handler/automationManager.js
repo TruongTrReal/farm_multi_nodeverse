@@ -24,12 +24,11 @@ let driverCount = 0;
 
 async function getScreenSize() {
   try {
-    // const { width, height } = await getResolution();
-    return { width: 1920, height: 1080 };
+    return await getResolution();
   } catch (error) {
     console.error('Error retrieving screen resolution:', error);
     // Fallback to default resolution
-    return { width: 1920, height: 1080 };
+    return { width: 800, height: 600 };
   }
 }
 
