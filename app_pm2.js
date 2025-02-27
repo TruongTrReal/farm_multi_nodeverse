@@ -8,8 +8,9 @@ import { resetDB } from "./db_utils.js";
 
 
 // Use yargs to parse command-line arguments
-const yargs = require('yargs/yargs');
-const { hideBin } = require('yargs/helpers');
+import yargs from 'yargs/yargs';
+import {hideBin} from 'yargs/helpers';
+
 const argv = yargs(hideBin(process.argv))
   .option('reset', {
     alias: 'r',
@@ -38,7 +39,7 @@ async function main() {
       await resetDB();
 
       // Delete the profiles folder and its contents
-      const profilesDir = path.join(__dirname, 'profiles');
+      const profilesDir = path.join('profiles');
       if (fs.existsSync(profilesDir)) {
         await fs.promises.rm(profilesDir, { recursive: true, force: true });
         console.log(`Deleted profiles folder: ${profilesDir}`);
