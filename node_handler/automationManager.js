@@ -18,14 +18,14 @@ import {
 } from "./config.js";
 import { tabReset } from "./automationHelpers.js";
 import fetch from "node-fetch";
-import { getResolution } from 'get-screen-resolution';
+// import { getResolution } from 'get-screen-resolution';
 
 let driverCount = 0;
 
 async function getScreenSize() {
   try {
-    const { width, height } = await getResolution();
-    return { width, height };
+    // const { width, height } = await getResolution();
+    return { width: 1920, height: 1080 };
   } catch (error) {
     console.error('Error retrieving screen resolution:', error);
     // Fallback to default resolution
