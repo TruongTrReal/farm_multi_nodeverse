@@ -1,7 +1,7 @@
 // despeed.js
 import { By, until } from "selenium-webdriver";
 import config from "./config.js";
-import { waitForElement, clickElement, switchToIframe, enterText, getAttribute } from "./automationHelpers.js";
+import { waitForElement, clickElement, enterText } from "./automationHelpers.js";
 import log4js from "log4js";
 
 
@@ -58,6 +58,7 @@ class DespeedService {
         }
       };
 
+      await driver.sleep(5000);
       const [pointValue] = await Promise.all([
         getValueSafe(selectors.pointValue)
       ]);
