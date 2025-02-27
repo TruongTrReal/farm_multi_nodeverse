@@ -1,11 +1,10 @@
 // app_test.js
 import fs from "fs";
 import path from "path";
-import { processProxies } from "./src/proxy/main.js";
-import { processAccountsAndProxies } from "./src/proxy/assign_proxy.js";
-import { resetDB } from "./src/db.js";
-import TaskAutomationManager from "./src/automationTasksManager.js";
-
+import AutomationManager from "./node_handler/automationManager.js";
+import { processProxies } from "./proxy_handler/main.js";
+import { processAccountsAndProxies } from "./proxy_handler/assign_proxy.js";
+import { resetDB } from "./db_utils.js";
 
 
 // Use yargs to parse command-line arguments
@@ -67,7 +66,7 @@ async function main() {
     }
 
     // Run automation manager
-    const manager = new TaskAutomationManager();
+    const manager = new AutomationManager();
     await manager.run();
 
   } catch (e) {
