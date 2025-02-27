@@ -28,6 +28,12 @@ const argv = yargs(hideBin(process.argv))
     description: 'List of services to run',
     choices: ['gradient', 'toggle', 'bless', 'openloop', 'blockmesh', 'despeed', 'depined']
   })
+  .option('headless', {
+    alias: 'h',
+    type: 'boolean',
+    description: 'Run in headless mode',
+    default: false
+  })
   .help()
   .argv;
 
@@ -67,7 +73,7 @@ async function main() {
     }
 
     // Run automation manager
-    const manager = new AutomationManager();
+    const manager = new AutomationManager({ headless: argv.headless });
     await manager.run();
 
   } catch (e) {

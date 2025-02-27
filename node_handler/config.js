@@ -240,7 +240,7 @@ export const configureChromeOptions = () => {
 
   if (os.platform() === 'linux') {
     args.push(
-      '--headless', 
+      // '--headless', 
       '--no-sandbox', 
       '--disable-gpu' 
     );

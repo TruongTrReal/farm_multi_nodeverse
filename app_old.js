@@ -82,8 +82,12 @@ async function main() {
       console.log('Skipping proxy and account processing.');
     }
 
+    // Ask if user wants to run in headless mode
+    const headlessAnswer = await askQuestion('Run in headless mode? (y/n): ');
+    const headless = headlessAnswer === 'y' || headlessAnswer === 'yes';
+
     // Run automation manager
-    const manager = new AutomationManager();
+    const manager = new AutomationManager({ headless: true });
     await manager.run();
 
   } catch (e) {
